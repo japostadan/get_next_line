@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouchaad <aouchaad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 19:53:52 by aouchaad          #+#    #+#             */
-/*   Updated: 2023/01/17 19:29:50 by aouchaad         ###   ########.fr       */
+/*   Created: 2024/03/27 10:31:04 by jpostada          #+#    #+#             */
+/*   Updated: 2024/03/27 11:25:34 by jpostada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_strchr(char *string, int chrstr)
 	if (!save)
 		return (NULL);
 	i++;
-	while (i < ft_strlen(string))				
+	while (i < ft_strlen(string))
 		save[j++] = string[i++];
 	save[j] = '\0';
 	return (save);

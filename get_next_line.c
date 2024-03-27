@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouchaad <aouchaad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 17:27:00 by aouchaad          #+#    #+#             */
-/*   Updated: 2022/11/22 19:15:54 by aouchaad         ###   ########.fr       */
+/*   Created: 2024/03/27 10:30:27 by jpostada          #+#    #+#             */
+/*   Updated: 2024/03/27 10:36:23 by jpostada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	check_for_nline(char *line)
+static int	check_for_nline(char *line)
 {
 	int	i;	
 
@@ -26,7 +26,7 @@ int	check_for_nline(char *line)
 	return (0);
 }
 
-char	*get_line_with_save(int fd, char *save)
+static char	*get_line_with_save(int fd, char *save)
 {
 	char	*buf;
 	int		y;
@@ -52,7 +52,7 @@ char	*get_line_with_save(int fd, char *save)
 	return (save);
 }
 
-char	*get_exact_line(char *save)
+static char	*get_exact_line(char *save)
 {
 	int		i;
 	char	*line;
