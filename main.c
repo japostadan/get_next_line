@@ -6,7 +6,7 @@
 /*   By: qli <qli@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 14:48:19 by qli           #+#    #+#                 */
-/*   Updated: 2020/11/06 15:11:21 by qli           ########   odam.nl         */
+/*   Updated: 2024/03/27 12:35:02 by jpostada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,116 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
-/*
-int		main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-    int     fd;
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
 
-    if (argc != 2)
+    char *filename = argv[1];
+    int fd = open(filename, O_RDONLY);
+    if (fd == -1) {
+        printf("File does not exist. Creating it...\n");
+        fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR);
+        if (fd == -1) {
+            perror("Failed to create file");
+            return 1;
+        }
+        // Write some content to the file
+        const char *content = "This is a test file. '\t' It '\n'contains multiple lines.\n";
+        if (write(fd, content, strlen(content)) == -1) {
+            perror("Failed to write to file");
+            return 1;
+        }
+        close(fd);
+        printf("File created successfully.\n");
+        // Reopen the file for reading
+        fd = open(filename, O_RDONLY);
+    }
+    
+    if (fd != -1)
     {
-        printf("Please run \"./get_next_line file_name\"\n");
-        return (1);
-    }    
-    fd = open(argv[1], O_RDONLY);
-    if (fd == -1)
-        return (1);
+        char *line;
+        line = (char *)1; // Initializing line to a non-NULL value
+        while (line != NULL)
+        {
+            line = get_next_line(fd); // Reading from file descriptor
+            if (line != NULL)
+            {
+                printf("%s\n", line);
+                free(line);
+            }
+        }
+        close(fd);
+    }
     else
     {
-        while (get_next_line(fd))
-        {
-            printf("%d",fd);
-        }
+        printf("Failed to open file.\n");
     }
-    close(fd);
-    return (0);
-}
-*/
 
+    return 0;
+}
+/*
 int main(void)
 {
-	char	*line;
-	int	fd;
-	
-	fd = open("test.txt", O_RDONLY);
-	line = (char *)1;
+    char    *line;
 
-	while (line != NULL)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
+    // Test reading from standard input (stdin)
+    printf("Testing reading from standard input:\n");
+    printf("Enter some lines of text (Ctrl+D to end):\n");
+    line = (char *)1; // Initializing line to a non-NULL value
+    while (line != NULL)
+    {
+        line = get_next_line(0); // Reading from standard input (stdin)
+        if (line != NULL)
+        {
+            printf("%s\n", line);
+            free(line);
+        }
+    }
+
+    // Test reading from a file
+    const char *filename = "test.txt";
+    int fd = open(filename, O_RDONLY);
+    if (fd == -1) {
+        printf("File does not exist. Creating it...\n");
+        fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR);
+        if (fd == -1) {
+            perror("Failed to create file");
+            return 1;
+        }
+        // Write some content to the file
+        const char *content = "This is a test file.\nIt contains multiple lines.\n";
+        if (write(fd, content, strlen(content)) == -1) {
+            perror("Failed to write to file");
+            return 1;
+        }
+        close(fd);
+        printf("File created successfully.\n");
+        // Reopen the file for reading
+        fd = open(filename, O_RDONLY);
+    }
+    
+    if (fd != -1)
+    {
+        line = (char *)1; // Reinitializing line to a non-NULL value
+        while (line != NULL)
+        {
+            line = get_next_line(fd); // Reading from file descriptor
+            if (line != NULL)
+            {
+                printf("%s\n", line);
+                free(line);
+            }
+        }
+        close(fd);
+    }
+    else
+    {
+        printf("Failed to open file.\n");
+    }
+
+    return 0;
 }
+*/
