@@ -6,71 +6,106 @@
 /*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:31:04 by jpostada          #+#    #+#             */
-/*   Updated: 2024/03/27 11:25:34 by jpostada         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:42:23 by jpostada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *string)
+size_t	ft_strlen(char *str)
 {
-	int	i;
+	size_t	count;
 
-	i = 0;
-	if (!string)
+	if (!str)
 		return (0);
-	while (string[i] != '\0')
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	size_t	i;
+	size_t	len;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	len = ft_strlen(s);
+	while (i <= len)
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
 		i++;
-	return (i);
+	}
+	return (NULL);
+}
+
+char	*ft_strdup(char *s1)
+{
+	char	*dup;
+	int		len;
+	int		i;
+
+	len = ft_strlen(s1);
+	dup = (char *)malloc((len + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	dup[len] = '\0';
+	i = -1;
+	while (s1[++i])
+		dup[i] = s1[i];
+	return (dup);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	j;
-	char	*ptr;
-	size_t	k;
+	char		*ptr;
+	size_t		i;
+	size_t		j;
+	size_t		strlen;
 
-	k = ft_strlen(s1);
-	i = 0;
-	j = 0;
-	ptr = malloc(sizeof(char) * (k + ft_strlen(s2) + 1));
+	strlen = ft_strlen(s1) + ft_strlen(s2);
+	ptr = (char *)malloc((strlen + 1) * sizeof(char));
 	if (!ptr)
 		return (NULL);
-	while (s1 && i < k)
+	i = 0;
+	while (s1 && s1[i])
 	{
 		ptr[i] = s1[i];
 		i++;
 	}
-	while (s2 && i < k + ft_strlen(s2))
-		ptr[i++] = s2[j++];
-	ptr[i] = '\0';
+	j = 0;
+	while (s2 && s2[j])
+	{
+		ptr[i + j] = s2[j];
+		j++;
+	}
+	ptr[i + j] = '\0';
 	free(s1);
 	return (ptr);
 }
 
-char	*ft_strchr(char *string, int chrstr)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	int		i;
-	int		j;
-	char	*save;
+	char	*ptr;
+	size_t	i;
 
 	i = 0;
-	j = 0;
-	while (string[i] != (char)chrstr)
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len >= ft_strlen(&s[start]))
+		ptr = (char *)malloc((ft_strlen(&s[start]) + 1) * sizeof(char));
+	else
+		ptr = (char *)malloc((len + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	while (i < len && s[start + i] != '\0')
 	{
-		if (string[i] == '\0')
-			return (0);
+		ptr[i] = s[start + i];
 		i++;
 	}
-	if (!string[i] || (string[i] == chrstr && string[i + 1] == '\0'))
-		return (NULL);
-	save = malloc (sizeof(char) * ((ft_strlen(string) - i) + 1));
-	if (!save)
-		return (NULL);
-	i++;
-	while (i < ft_strlen(string))
-		save[j++] = string[i++];
-	save[j] = '\0';
-	return (save);
+	ptr[i] = '\0';
+	return (ptr);
 }

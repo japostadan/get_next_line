@@ -6,94 +6,100 @@
 /*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:30:27 by jpostada          #+#    #+#             */
-/*   Updated: 2024/03/27 10:36:23 by jpostada         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:39:18 by jpostada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	check_for_nline(char *line)
-{
-	int	i;	
+#include "get_next_line.h"
 
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
+void	free_ptr(char **ptr)
+{
+	free(*ptr);
+	*ptr = NULL;
 }
 
-static char	*get_line_with_save(int fd, char *save)
+void	set_content(int fd, char **content)
 {
-	char	*buf;
-	int		y;
+	char		*buffer;
+	char		*tmp;
+	ssize_t		bytes_read;
 
-	buf = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-	while (1)
+	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buffer)
+		return (free_ptr(content));
+	buffer[BUFFER_SIZE] = '\0';
+	while (!ft_strchr(*content, '\n'))
 	{
-		y = read(fd, buf, BUFFER_SIZE);
-		if (y == 0)
-			break ;
-		if (y == -1)
-		{
-			free(save);
-			free(buf);
-			return (NULL);
-		}
-		buf[y] = '\0';
-		save = ft_strjoin(save, buf);
-		if (check_for_nline(save) == 1)
-			break ;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (free_ptr(content), free(buffer), free(tmp));
+		buffer[bytes_read] = '\0';
+		if (bytes_read == 0)
+			return (free(buffer));
+		tmp = ft_strjoin(*content, buffer);
+		if (!tmp)
+			return (free(buffer), free_ptr(content));
+		*content = tmp;
 	}
-	free(buf);
-	return (save);
+	free(buffer);
 }
 
-static char	*get_exact_line(char *save)
+char	*extract_line(char *content)
 {
-	int		i;
+	char	*nl_pos;
 	char	*line;
 
-	i = 0;
-	if (!save)
+	nl_pos = ft_strchr(content, '\n');
+	if (!nl_pos)
+	{
+		line = ft_strdup(content);
+		if (!line)
+			return (NULL);
+		return (line);
+	}
+	line = ft_substr(content, 0, nl_pos - content + 1);
+	if (!line)
 		return (NULL);
-	while (save[i] != '\n' && save[i] != '\0')
-		i++;
-	line = malloc (sizeof(char) * (i + 2));
-	i = 0;
-	while (save[i] != '\n' && save[i] != '\0')
-	{
-		line[i] = save[i];
-		i++;
-	}
-	if (save[i] == '\n')
-	{
-		line[i] = save[i];
-		i++;
-	}
-	line[i] = '\0';
 	return (line);
+}
+
+void	refresh_content(char **content)
+{
+	char	*nl_pos;
+	char	*tmp;
+
+	nl_pos = ft_strchr(*content, '\n');
+	if (!nl_pos || ft_strlen(nl_pos + 1) == 0)
+		return (free_ptr(content));
+	tmp = ft_strdup(nl_pos + 1);
+	if (!tmp)
+		return (free_ptr(content));
+	free_ptr(content);
+	*content = tmp;
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*save;
-	char		*linefree;
+	static char	*content;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
+	{
+		free_ptr(&content);
 		return (NULL);
-	if (fd == 1 || fd == 2)
+	}
+	line = NULL;
+	set_content(fd, &content);
+	if (!content)
 		return (NULL);
-	save = get_line_with_save(fd, save);
-	line = get_exact_line(save);
+	line = extract_line(content);
 	if (!line)
+	{
+		free_ptr(&content);
 		return (NULL);
-	linefree = save;
-	save = ft_strchr(linefree, '\n');
-	free(linefree);
+	}
+	refresh_content(&content);
 	return (line);
 }
