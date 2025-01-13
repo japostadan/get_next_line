@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
+/*   By: japostad <japostad@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 10:30:48 by jpostada          #+#    #+#             */
-/*   Updated: 2024/04/02 18:41:02 by jpostada         ###   ########.fr       */
+/*   Created: 2025/01/13 20:11:35 by japostad          #+#    #+#             */
+/*   Updated: 2025/01/13 20:11:39 by japostad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

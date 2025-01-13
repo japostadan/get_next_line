@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
+/*   By: japostad <japostad@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 19:10:08 by jpostada          #+#    #+#             */
-/*   Updated: 2024/04/02 19:11:41 by jpostada         ###   ########.fr       */
+/*   Created: 2025/01/13 20:12:54 by japostad          #+#    #+#             */
+/*   Updated: 2025/01/13 20:13:11 by japostad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

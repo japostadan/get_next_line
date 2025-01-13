@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpostada <jpostada@student.42barcel>       +#+  +:+       +#+        */
+/*   By: japostad <japostad@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 10:30:27 by jpostada          #+#    #+#             */
-/*   Updated: 2024/04/02 18:39:18 by jpostada         ###   ########.fr       */
+/*   Created: 2025/01/13 20:11:48 by japostad          #+#    #+#             */
+/*   Updated: 2025/01/13 20:12:14 by japostad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "get_next_line.h"
 
 #include "get_next_line.h"
 
