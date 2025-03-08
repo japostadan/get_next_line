@@ -29,7 +29,7 @@ jobs:
       # Step 4: Run Docker container and make changes
       - name: Run Docker container and make changes
         run: |
-          docker run --name get_next_line -v $GITHUB_WORKSPACE:/app get_next_line bash -c "make && git add . && git commit -m 'Automated changes from Docker container'"
+          docker run --name get_next_line -v $GITHUB_WORKSPACE:/app get_next_line
 
       # Step 5: Push changes back to GitHub
       - name: Push changes to GitHub
