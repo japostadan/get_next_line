@@ -11,21 +11,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+
     steps:
-    # Step 1: Checkout the code
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Step 1: Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    # Step 2: Set up Docker Buildx (required for Docker builds)
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      # Step 2: Set up Docker Buildx (optional for advanced setups)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    # Step 3: Build the Docker image
-    - name: Build Docker image
-      run: |
-        docker build -t get_next_line .
+      # Step 3: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t get_next_line .
 
-    # Step 4: Run the Docker container
-    - name: Run Docker container
-      run: |
-        docker run --rm get_next_line
+      # Step 4: Run Docker container and make changes
+      - name: Run Docker container and make changes
+        run: |
+          docker run --name get_next_line -v $(pwd):/app get_next_line
+
+      # Step 5: Commit changes and push back to GitHub
+      - name: Commit changes and push back to GitHub
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          # Check for changes
+          git status
+
+          # If there are changes, commit and push them
+          git add .
+          git commit -m "Automated changes from Docker container"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Auto github token
