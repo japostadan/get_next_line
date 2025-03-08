@@ -29,20 +29,20 @@ jobs:
       # Step 4: Run Docker container and make changes
       - name: Run Docker container and make changes
         run: |
-          docker run --name get_next_line -v $(pwd):/app get_next_line
+          docker run --name get_next_line -v $GITHUB_WORKSPACE:/app get_next_line bash -c "make && git add . && git commit -m 'Automated changes from Docker container'"
 
-      # Step 5: Commit changes and push back to GitHub
-      - name: Commit changes and push back to GitHub
+      # Step 5: Push changes back to GitHub
+      - name: Push changes to GitHub
         run: |
+          # Ensure Git is configured with the necessary user details
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          # Check for changes
+          # Check for changes (this is mostly optional if step 4 commits)
           git status
 
-          # If there are changes, commit and push them
-          git add .
-          git commit -m "Automated changes from Docker container"
+          # Push changes back to GitHub
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Auto github token
+
