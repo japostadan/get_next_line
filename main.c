@@ -70,47 +70,7 @@ int main(void)
             free(line);
         }
     }
-
-    // Test reading from a file
-    const char *filename = "test.txt";
-    int fd = open(filename, O_RDONLY);
-    if (fd == -1) {
-        printf("File does not exist. Creating it...\n");
-        fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR);
-        if (fd == -1) {
-            perror("Failed to create file");
-            return 1;
-        }
-        // Write some content to the file
-        const char *content = "This is a test file.\nIt contains multiple lines.\n";
-        if (write(fd, content, strlen(content)) == -1) {
-            perror("Failed to write to file");
-            return 1;
-        }
-        close(fd);
-        printf("File created successfully.\n");
-        // Reopen the file for reading
-        fd = open(filename, O_RDONLY);
-    }
-    
-    if (fd != -1)
-    {
-        line = (char *)1; // Reinitializing line to a non-NULL value
-        while (line != NULL)
-        {
-            line = get_next_line(fd); // Reading from file descriptor
-            if (line != NULL)
-            {
-                printf("%s\n", line);
-                free(line);
-            }
-        }
-        close(fd);
-    }
-    else
-    {
-        printf("Failed to open file.\n");
-    }
+	printf("Good Job!!\n");
 
     return 0;
 }

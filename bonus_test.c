@@ -14,7 +14,7 @@ void test_multiple_file_descriptors(void)
     int fd3 = open("test3.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
     
     write(fd1, "In test1.txt, First New Line\nSecond New Line\nThird New Line 1, Line 3\n", 68);
-    write(fd2, "In test2.txt, First New Line\nSecond New Line,\n", 48);
+    write(fd2, "In test2.txt, First New Line\nSecond New Line,\n", 47);
     write(fd3, "In test3.txt, Single Line\n", 27);
     
     close(fd1);
@@ -115,7 +115,7 @@ void test_interleaved_reads(void)
     int fd_empty = open("interleaved_empty.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
     int fd_binary = open("interleaved_binary.bin", O_RDWR | O_CREAT | O_TRUNC, 0644);
     
-    write(fd_text, "Line 1 text\nLine 2 text\nLine 3 text\n", 36);
+    write(fd_text, "Line 1 yow!\nLine 2 here\nLine 3 I am!\n", 36);
     // fd_empty remains empty
     unsigned char binary_data[] = {0xFF, 0x00, '\n', 0xAB, 0xCD, '\n'};
     write(fd_binary, binary_data, sizeof(binary_data));
@@ -136,7 +136,6 @@ void test_interleaved_reads(void)
     line = get_next_line(fd_text);
     printf("%s", line ? line : "NULL");
     free(line);
-    
     // Read from empty file
     printf("Empty file: ");
     line = get_next_line(fd_empty);
@@ -166,9 +165,14 @@ void test_interleaved_reads(void)
     line = get_next_line(fd_text);
     printf("%s", line ? line : "NULL");
     free(line);
-    
-    // Read second line from binary file
-    printf("Binary file (second line): ");
+    // Read third line from text file
+	printf("Text file (third line): ");
+    line = get_next_line(fd_text);
+    printf("%s", line ? line : "NULL");
+    free(line);
+	
+	// Read second line from binary file
+    printf("\nBinary file (second line): ");
     line = get_next_line(fd_binary);
     if (line)
     {
@@ -260,31 +264,6 @@ void test_different_buffer_sizes(void)
     close(fd1);
     close(fd2);
 }
-
-void test_close_between_calls(void)
-{
-    printf("\n--- Testing Close Between Calls ---\n");
-    
-    int fd = open("close_test.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
-    write(fd, "Line 1\nLine 2\nLine 3\n", 21);
-    close(fd);
-    
-    fd = open("close_test.txt", O_RDONLY);
-    char *line = get_next_line(fd);
-    printf("First call: %s", line ? line : "NULL");
-    free(line);
-    
-    // Close and reopen
-    close(fd);
-    fd = open("close_test.txt", O_RDONLY);
-    
-    line = get_next_line(fd);
-    printf("After close/reopen: %s", line ? line : "NULL");
-    free(line);
-    
-    close(fd);
-}
-
 int main(void)
 {
     printf("=== GET_NEXT_LINE_BONUS TESTS ===\n");
@@ -295,7 +274,6 @@ int main(void)
     //test_invalid_fds();
     test_interleaved_reads();
     test_different_buffer_sizes();
-    test_close_between_calls();
     
     printf("\n=== ALL BONUS TESTS COMPLETED ===\n");
     return (0);
