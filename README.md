@@ -24,3 +24,14 @@ This project is about programming a function that returns a line read from a fil
     file descriptor or returning a line from another fd.
     It means that you should be able to call get_next_line() to read from fd 3, then
     fd 4, then 5, then once again 3, once again 4, and so forth.
+
+
+### Static Variables
+
+	This project can easily be solved by using static variables.
+	Unlike local variables, which are destroyed once the function exits,
+	Static variables are persistent meaning the data they hold persist across fucntion calls,
+	even when a function ends and another begins.
+	The persistence allows to manage data that needs to survive throughout the program's execution.
+
+
