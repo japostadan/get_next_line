@@ -49,5 +49,3 @@ WORKDIR /app
 
 # Command to run when container starts (you can change this to your app or a shell)
 CMD ["/bin/zsh"]
-
-

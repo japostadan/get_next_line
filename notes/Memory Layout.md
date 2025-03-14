@@ -1,6 +1,6 @@
 ### Memory Layout in Programs
 
-	- Th memory layout of a program refers to how's the data is stored in the computer
+	- The memory layout of a program refers to how's the data is stored in the computer
 	computer memory during execution.
 
 ``` vbnet

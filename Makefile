@@ -9,7 +9,7 @@ OBJ = $(SRC:.c=.o)
 
 # Bonus version
 NAME_BONUS = test_gnl_bonus
-SRC_BONUS = test_gnl_bonus.c get_next_line_bonus.c get_next_line_utils_bonus.c
+SRC_BONUS = test_gnl.c get_next_line_bonus.c get_next_line_utils_bonus.c
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 all: $(NAME) $(NAME_BONUS)
@@ -24,24 +24,24 @@ $(NAME_BONUS): $(OBJ_BONUS)
 	$(CC) $(CFLAGS) $(BUFFER) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(OBJ_BONUS)
-	rm -f test*.txt
-	rm -f *.bin
-	rm -f empty.txt
-	rm -f one_line_no_nl.txt
-	rm -f one_line_nl.txt
-	rm -f multiple_lines.txt
-	rm -f large_file.txt
-	rm -f binary.bin
-	rm -f buffer_test.txt
-	rm -f buffer_test1.txt
-	rm -f buffer_test2.txt
-	rm -f close_test.txt
-	rm -f interleaved_*.txt
-	rm -f interleaved_*.bin
-
+	@rm -f $(OBJ) $(OBJ_BONUS)
+	@rm -f test*.txt
+	@rm -f *.bin
+	@rm -f empty.txt
+	@rm -f one_line_no_nl.txt
+	@rm -f one_line_nl.txt
+	@rm -f multiple_lines.txt
+	@rm -f large_file.txt
+	@rm -f binary.bin
+	@rm -f buffer_test.txt
+	@rm -f buffer_test1.txt
+	@rm -f buffer_test2.txt
+	@rm -f close_test.txt
+	@rm -f interleaved_*.txt
+	@rm -f interleaved_*.bin
+	
 fclean: clean
-	rm -f $(NAME) $(NAME_BONUS)
+	@rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 

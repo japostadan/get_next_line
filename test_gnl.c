@@ -38,7 +38,7 @@ void test_one_line_with_newline(void)
 {
     printf("\n--- Testing One Line With Newline ---\n");
     int fd = open("one_line_nl.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
-    write(fd, "This is a single line with a newline\n", 37);
+    write(fd, "This is a single line with a \nnewline", 37);
     close(fd);
     
     fd = open("one_line_nl.txt", O_RDONLY);
