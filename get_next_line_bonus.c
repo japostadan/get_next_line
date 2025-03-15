@@ -32,13 +32,13 @@ void	set_content(int fd, char **content)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free_ptr(content), free(buffer), free(tmp));
+			return (free_ptr(content), free(buffer));
 		buffer[bytes_read] = '\0';
 		if (bytes_read == 0)
 			return (free(buffer));
 		tmp = ft_strjoin(*content, buffer);
 		if (!tmp)
-			return (free(buffer), free_ptr(content));
+			return (free(tmp), free(buffer), free_ptr(content));
 		*content = tmp;
 	}
 	free(buffer);
@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 	static char	*content[1025] = {NULL};
 	char		*line;
 
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 	{
 		free_ptr(&content[fd]);
 		return (NULL);

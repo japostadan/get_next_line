@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 	static char	*content;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		free_ptr(&content);
 		return (NULL);
